@@ -3,70 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     <link
+      href="https://fonts.cdnfonts.com/css/sf-pro-display"
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <link rel="stylesheet" type="text/css" href="app.css" />
     <title>Calculator</title>
   </head>
-  <style>
-    .but {
-      float: left;
-      height: 50px;
-      width: 50px;
-      padding: 5px;
-      margin: 5px;
-      background-color: gray;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .container {
-      width: 300px;
-      margin: 20px auto;
-      background-color: silver;
-    }
-    .button {
-      margin-left: 5px;
-      margin-top: 5px;
-    }
-  </style>
   <body>
     <div class="container">
-      <div class="but">AC</div>
-      <div class="but">%</div>
-      <div class="but">CE</div>
-      <div class="but">C</div>
-      <div class="but"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
-      <div class="but">1/x</div>
+      <header>iCalc</header>
+      <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons" id="buttons">
+          <button>7</button>
+          <button>8</button>
+          <button>9</button>
+          <button class="remove" id="remove">&#9003;</button>
 
-      <div class="but">^</div>
-      <div class="but">&radic;</div>
-      <div class="but">&#8731;</div>
-      <div class="but">&#xf7;</div>
-      <div class="but">&#13265;</div>
-      <div class="but">&#x2091;</div>
-      <div class="but">&#960;</div>
-      <div class="but">|x|</div>
-      <div class="but">n!</div>
-
-      <div class="but">1</div>
-      <div class="but">2</div>
-      <div class="but">3</div>
-      <div class="but">4</div>
-      <div class="but">5</div>
-      <div class="but">6</div>
-      <div class="but">7</div>
-      <div class="but">8</div>
-      <div class="but">9</div>
-      <div class="but">&equals;</div>
-
-      <!-- <div class="but">8</div>
-      <div class="but">9</div> -->
-      <div style="clear: both"></div>
+          <button class="scientific">sqrt</button>
+          <button class="scientific">x²</button>
+          <button class="scientific">sin</button>
+          <button class="scientific">cos</button>
+          <button class="scientific">tan</button>
+          <button class="scientific">π</button>
+          <button class="scientific">e</button>
+          <button class="scientific">x^y</button>
+          <button class="scientific">log</button>
+          <button>4</button>
+          <button>5</button>
+          <button>6</button>
+          <button class="operator">*</button>
+          <button>1</button>
+          <button>2</button>
+          <button>3</button>
+          <button class="operator">-</button>
+          <button>0</button>
+          <button>.</button>
+          <button class="operator" id="equals">=</button>
+          <button class="operator">+</button>
+          <button class="operator">/</button>
+          <button class="clear" id="clear">C</button>
+        </div>
+      </div>
     </div>
+    <script src="app.js"></script>
   </body>
 </html>
